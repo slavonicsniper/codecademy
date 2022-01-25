@@ -30,30 +30,30 @@ class Field {
       let move = prompt('Which way? ');
       switch(move) {
         case 'u': case 'U':
-          posX -= 1;
-          break;
-        case 'd': case 'D':
-          posX += 1;
-          break;
-        case 'l': case 'L':
           posY -= 1;
           break;
-        case 'r': case 'R':
+        case 'd': case 'D':
           posY += 1;
+          break;
+        case 'l': case 'L':
+          posX -= 1;
+          break;
+        case 'r': case 'R':
+          posX += 1;
           break;
         default:
           return 'Use U(up),D(down),L(left),R(right) to move accross the field.';
       }
-      if(posX < 0 || posX >= this.field.length || posY < 0 || posY >= this.field[0].length) {
+      if(posY < 0 || posY >= this.field.length || posX < 0 || posX >= this.field[0].length) {
         return 'Out of field!'
-      } else if(this.field[posX][posY] === hole) {
+      } else if(this.field[posY][posX] === hole) {
         return 'You fell into a hole!'
-      } else if(this.field[posX][posY] === hat){
+      } else if(this.field[posY][posX] === hat){
         return 'You won!'
       } else {
-        this.field[posX][posY] = pathCharacter;
+        this.field[posY][posX] = pathCharacter;
         if(mode === 'hard') {
-          fieldCharacterIndexesArr.splice(fieldCharacterIndexesArr.indexOf([posX, posY]), 1);
+          fieldCharacterIndexesArr.splice(fieldCharacterIndexesArr.findIndex(e => e[0] === posY && e[1] === posX), 1);
           this.hardMode(fieldCharacterIndexesArr);
         }
       }
